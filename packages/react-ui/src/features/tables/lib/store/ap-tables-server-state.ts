@@ -1,10 +1,15 @@
 import { PromiseQueue } from '@/lib/promise-queue';
-import { Field, PopulatedRecord, Table } from '@activepieces/shared';
+import {
+  CreateFieldRequest,
+  Field,
+  PopulatedRecord,
+  Table,
+} from '@activepieces/shared';
 
 import { fieldsApi } from '../fields-api';
 import { recordsApi } from '../records-api';
 
-import { ClientField, ClientRecordData } from './ap-tables-client-state';
+import { ClientRecordData } from './ap-tables-client-state';
 
 export const createServerState = (
   _table: Table,
@@ -42,13 +47,9 @@ export const createServerState = (
         });
       });
     },
-    createField: (field: ClientField) => {
+    createField: (field: CreateFieldRequest) => {
       addPromiseToQueue(async () => {
-        const serverField = await fieldsApi.create({
-          name: field.name,
-          type: field.type,
-          tableId: clonedTable.id,
-        });
+        const serverField = await fieldsApi.create(field);
         clonedFields.push(serverField);
       });
     },
@@ -104,6 +105,14 @@ export const createServerState = (
         for (const index of sortedIndices) {
           clonedRecords.splice(index, 1);
         }
+      });
+    },
+    renameField: (fieldIndex: number, newName: string) => {
+      addPromiseToQueue(async () => {
+        clonedFields[fieldIndex].name = newName;
+        await fieldsApi.update(clonedFields[fieldIndex].id, {
+          name: newName,
+        });
       });
     },
   };

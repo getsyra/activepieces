@@ -1,9 +1,11 @@
 import JSZip from 'jszip';
-import { Type, Calendar, Hash } from 'lucide-react';
-import { ReactNode } from 'react';
+import { Type, Calendar, Hash, ChevronDownCircle } from 'lucide-react';
+import { createContext, ReactNode } from 'react';
 
 import { downloadFile } from '@/lib/utils';
 import { ExportTableResponse, FieldType } from '@activepieces/shared';
+
+import { ClientField } from './store/ap-tables-client-state';
 
 function getColumnIcon(type: FieldType): ReactNode {
   switch (type) {
@@ -13,6 +15,8 @@ function getColumnIcon(type: FieldType): ReactNode {
       return <Calendar className="h-4 w-4" />;
     case FieldType.NUMBER:
       return <Hash className="h-4 w-4" />;
+    case FieldType.STATIC_DROPDOWN:
+      return <ChevronDownCircle className="h-4 w-4" />;
     default:
       return null;
   }
@@ -59,3 +63,10 @@ export const tablesUtils = {
   exportTables,
   getColumnIcon,
 };
+
+export const FieldHeaderContext = createContext<{
+  setIsPopoverOpen: (open: boolean) => void;
+  setPopoverContent: (content: React.ReactNode) => void;
+  field: ClientField & { index: number };
+  userHasTableWritePermission: boolean;
+} | null>(null);
