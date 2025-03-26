@@ -46,6 +46,18 @@ WORKDIR /usr/src/app
 COPY . .
 
 COPY .npmrc package.json package-lock.json ./
+
+# Increase Node.js memory limit and add retries for npm install
+RUN NODE_OPTIONS="--max_old_space_size=4096" npm ci --no-audit --prefer-offline || \
+    NODE_OPTIONS="--max_old_space_size=4096" npm ci --no-audit --prefer-offline || \
+    NODE_OPTIONS="--max_old_space_size=4096" npm ci --no-audit --prefer-offline
+
+RUN NODE_OPTIONS="--max_old_space_size=4096" npx nx run-many --target=build --projects=server-api --configuration production
+RUN NODE_OPTIONS="--max_old_space_size=4096" npx nx run-many --target=build --projects=react-ui 
+
+# Install backend production dependencies
+RUN cd dist/packages/server/api && NODE_OPTIONS="--max_old_space_size=4096" npm install --production --force
+
 RUN npm ci
 
 RUN npx nx run-many --target=build --projects=server-api --configuration production
