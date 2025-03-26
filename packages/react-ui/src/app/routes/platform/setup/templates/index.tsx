@@ -116,7 +116,8 @@ export default function TemplatesPage() {
         <DataTableColumnHeader column={column} title={t('Name')} />
       ),
       cell: ({ row }) => {
-        return <div className="text-left">{row.original.name}</div>;
+        const templateName = row.original.name.replace('@activepieces/template-', '@syra/');
+        return <div className="text-left">{templateName}</div>;
       },
     },
     {

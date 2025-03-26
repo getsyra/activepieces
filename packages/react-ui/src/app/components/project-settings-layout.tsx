@@ -1,11 +1,9 @@
 import { t } from 'i18next';
 import {
   Bell,
-  GitBranch,
   Puzzle,
   Settings,
   SunMoon,
-  Users,
 } from 'lucide-react';
 import { Navigate } from 'react-router-dom';
 
@@ -45,12 +43,6 @@ export default function ProjectSettingsLayout({
       icon: <SunMoon size={iconSize} />,
     },
     {
-      title: t('Team'),
-      href: authenticationSession.appendProjectRoutePrefix('/settings/team'),
-      icon: <Users size={iconSize} />,
-      hasPermission: checkAccess(Permission.READ_PROJECT_MEMBER),
-    },
-    {
       title: t('Pieces'),
       href: authenticationSession.appendProjectRoutePrefix('/settings/pieces'),
       icon: <Puzzle size={iconSize} />,
@@ -60,14 +52,6 @@ export default function ProjectSettingsLayout({
       href: authenticationSession.appendProjectRoutePrefix('/settings/alerts'),
       icon: <Bell size={iconSize} />,
       hasPermission: checkAccess(Permission.READ_ALERT),
-    },
-    {
-      title: t('Environments'),
-      href: authenticationSession.appendProjectRoutePrefix(
-        '/settings/environments',
-      ),
-      icon: <GitBranch size={iconSize} />,
-      hasPermission: checkAccess(Permission.READ_PROJECT_RELEASE),
     },
   ];
 

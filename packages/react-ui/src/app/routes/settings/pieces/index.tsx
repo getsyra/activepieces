@@ -4,7 +4,6 @@ import { CheckIcon, Package, Trash } from 'lucide-react';
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { RequestTrial } from '@/app/components/request-trial';
 import { ConfirmationDeleteDialog } from '@/components/delete-dialog';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,7 +12,6 @@ import {
   RowDataWithActions,
 } from '@/components/ui/data-table';
 import { DataTableColumnHeader } from '@/components/ui/data-table/data-table-column-header';
-import { LockedAlert } from '@/components/ui/locked-alert';
 import { PieceIcon } from '@/features/pieces/components/piece-icon';
 import { piecesApi } from '@/features/pieces/lib/pieces-api';
 import { piecesHooks } from '@/features/pieces/lib/pieces-hook';
@@ -61,7 +59,8 @@ const columns: ColumnDef<RowDataWithActions<PieceMetadataModelSummary>>[] = [
       <DataTableColumnHeader column={column} title={t('Package Name')} />
     ),
     cell: ({ row }) => {
-      return <div className="text-left">{row.original.name}</div>;
+      const packageName = row.original.name.replace('@activepieces/piece-', '@syra/');
+      return <div className="text-left">{packageName}</div>;
     },
   },
   {
@@ -110,9 +109,13 @@ const ProjectPiecesPage = () => {
   const { platform } = platformHooks.useCurrentPlatform();
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('name') ?? '';
-  const { pieces, isLoading, refetch } = piecesHooks.usePieces({
+  const { pieces: allPieces, isLoading, refetch } = piecesHooks.usePieces({
     searchQuery,
   });
+
+  const pieces = useMemo(() => {
+    return allPieces?.filter(piece => piece.displayName !== 'Activepieces Platform') ?? [];
+  }, [allPieces]);
 
   const bulkActions: BulkAction<PieceMetadataModelSummary>[] = useMemo(
     () => [
@@ -128,20 +131,6 @@ const ProjectPiecesPage = () => {
   return (
     <div className="flex w-full flex-col items-center justify-center gap-4">
       <div className="mx-auto w-full flex-col">
-        {!platform.managePiecesEnabled && (
-          <LockedAlert
-            title={t('Control Pieces')}
-            description={t(
-              "Show the pieces that matter most to your users and hide the ones you don't like.",
-            )}
-            button={
-              <RequestTrial
-                featureKey="ENTERPRISE_PIECES"
-                buttonVariant="outline-primary"
-              />
-            }
-          />
-        )}
         <TableTitle>{t('Pieces')}</TableTitle>
         <DataTable
           emptyStateTextTitle={t('No pieces found')}
@@ -160,7 +149,7 @@ const ProjectPiecesPage = () => {
             } as const,
           ]}
           page={{
-            data: pieces ?? [],
+            data: pieces,
             next: null,
             previous: null,
           }}

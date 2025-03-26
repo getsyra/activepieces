@@ -144,19 +144,6 @@ export function LanguageSwitcher() {
             </Command>
           </PopoverContent>
         </Popover>
-        {showCommunity ? (
-          <div className="text-sm text-muted-foreground mt-2">
-            {t('Help us translate Activepieces to your language.')}
-            <span
-              className="text-primary ml-2 cursor-pointer"
-              onClick={() =>
-                openNewIndow('https://www.activepieces.com/docs/about/i18n')
-              }
-            >
-              {t('Learn more')}
-            </span>
-          </div>
-        ) : null}
       </div>
     </div>
   );

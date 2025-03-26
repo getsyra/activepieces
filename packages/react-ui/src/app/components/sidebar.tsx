@@ -1,10 +1,7 @@
-import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
 import { t } from 'i18next';
 import {
   ChevronDownIcon,
   ChevronUpIcon,
-  ExternalLink,
-  FileTextIcon,
   LockKeyhole,
   Settings,
 } from 'lucide-react';
@@ -320,42 +317,6 @@ export function SidebarComponent({
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
-                  {showCommunity && (
-                    <>
-                      <SidebarMenuItem className="hover:bg-accent hover:text-primary rounded-lg transition-colors">
-                        <SidebarMenuButton asChild>
-                          <Link
-                            to={supportUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex justify-between"
-                          >
-                            <div className="flex items-center gap-2">
-                              <QuestionMarkCircledIcon className="size-5" />
-                              <span>{t('Community Support')}</span>
-                            </div>
-                            <ExternalLink className="size-5" />
-                          </Link>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                      <SidebarMenuItem className="hover:bg-accent hover:text-primary rounded-lg transition-colors">
-                        <SidebarMenuButton asChild>
-                          <Link
-                            to="https://activepieces.com/docs"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex justify-between"
-                          >
-                            <div className="flex items-center gap-2">
-                              <FileTextIcon className="size-5" />
-                              <span>{t('Docs')}</span>
-                            </div>
-                            <ExternalLink className="size-5" />
-                          </Link>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    </>
-                  )}
                 </SidebarMenu>
                 <Separator />
                 <SidebarMenu>

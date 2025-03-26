@@ -294,28 +294,6 @@ const SignUpForm = ({
               </FormItem>
             )}
           />
-          {showNewsLetterCheckbox && (
-            <FormField
-              control={form.control}
-              name="newsLetter"
-              render={({ field }) => (
-                <FormItem className="flex items-center gap-2 ">
-                  <FormControl>
-                    <Checkbox
-                      id="newsLetter"
-                      className="!m-0"
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    ></Checkbox>
-                  </FormControl>
-                  <Label htmlFor="newsLetter">
-                    {t(`Receive updates and newsletters from activepieces`)}
-                  </Label>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          )}
 
           {form?.formState?.errors?.root?.serverError && (
             <FormMessage>

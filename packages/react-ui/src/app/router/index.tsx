@@ -66,9 +66,7 @@ import ViewRelease from '../routes/project-release/view-release';
 import { FlowRunPage } from '../routes/runs/id';
 import AlertsPage from '../routes/settings/alerts';
 import AppearancePage from '../routes/settings/appearance';
-import { EnvironmentPage } from '../routes/settings/environment';
 import GeneralPage from '../routes/settings/general';
-import TeamPage from '../routes/settings/team';
 import { SignInPage } from '../routes/sign-in';
 import { SignUpPage } from '../routes/sign-up';
 import { ShareTemplatePage } from '../routes/templates/share-template';
@@ -374,39 +372,6 @@ const routes = [
       </DashboardContainer>
     ),
   }),
-  ...ProjectRouterWrapper({
-    path: '/settings/team',
-    element: (
-      <DashboardContainer>
-        <RoutePermissionGuard permission={Permission.READ_PROJECT_MEMBER}>
-          <PageTitle title="Team">
-            <ProjectSettingsLayout>
-              <TeamPage />
-            </ProjectSettingsLayout>
-          </PageTitle>
-        </RoutePermissionGuard>
-      </DashboardContainer>
-    ),
-  }),
-  {
-    path: '/team',
-    element: <Navigate to="/settings/team" replace></Navigate>,
-  },
-
-  ...ProjectRouterWrapper({
-    path: '/settings/environments',
-    element: (
-      <DashboardContainer>
-        <RoutePermissionGuard permission={Permission.READ_PROJECT_RELEASE}>
-          <PageTitle title="Environments">
-            <ProjectSettingsLayout>
-              <EnvironmentPage />
-            </ProjectSettingsLayout>
-          </PageTitle>
-        </RoutePermissionGuard>
-      </DashboardContainer>
-    ),
-  }),
 
   {
     path: '/invitation',
@@ -452,7 +417,6 @@ const routes = [
         <PageTitle title="Analytics">
           <div className="flex flex-col gap-4 w-full">
             <PlatformMessages />
-            <AnalyticsPage />
           </div>
         </PageTitle>
       </PlatformAdminContainer>
