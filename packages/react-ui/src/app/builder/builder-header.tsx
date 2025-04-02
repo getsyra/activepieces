@@ -34,7 +34,6 @@ import {
   FlowOperationType,
   FlowVersionState,
   Permission,
-  supportUrl,
 } from '@activepieces/shared';
 
 import FlowActionMenu from '../components/flow-actions-menu';
@@ -46,9 +45,6 @@ export const BuilderHeader = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const openNewWindow = useNewWindow();
-  const { data: showSupport } = flagsHooks.useFlag<boolean>(
-    ApFlagId.SHOW_COMMUNITY,
-  );
   const isInRunsPage = useMemo(
     () => location.pathname.includes('/runs'),
     [location.pathname],
@@ -157,21 +153,6 @@ export const BuilderHeader = () => {
 
         <div className="grow"></div>
         <div className="flex items-center justify-center gap-4">
-          {showSupport && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="gap-2 px-2"
-                  onClick={() => openNewWindow(supportUrl)}
-                >
-                  <QuestionMarkCircledIcon className="w-4 h-4"></QuestionMarkCircledIcon>
-                  {t('Support')}
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side="bottom">{t('Support')}</TooltipContent>
-            </Tooltip>
-          )}
           {hasPermissionToReadRuns && (
             <Tooltip>
               <TooltipTrigger asChild>
