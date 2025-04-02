@@ -7,7 +7,6 @@ import { useSearchParams } from 'react-router-dom';
 import { RequestTrial } from '@/app/components/request-trial';
 import { ApplyTags } from '@/app/routes/platform/setup/pieces/apply-tags';
 import { PieceActions } from '@/app/routes/platform/setup/pieces/piece-actions';
-import { SyncPiecesButton } from '@/app/routes/platform/setup/pieces/sync-pieces';
 import { ConfigurePieceOAuth2Dialog } from '@/app/routes/platform/setup/pieces/update-oauth2-dialog';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -15,7 +14,6 @@ import { DataTable, RowDataWithActions } from '@/components/ui/data-table';
 import { DataTableColumnHeader } from '@/components/ui/data-table/data-table-column-header';
 import { LockedAlert } from '@/components/ui/locked-alert';
 import { oauth2AppsHooks } from '@/features/connections/lib/oauth2-apps-hooks';
-import { InstallPieceDialog } from '@/features/pieces/components/install-piece-dialog';
 import { PieceIcon } from '@/features/pieces/components/piece-icon';
 import { piecesHooks } from '@/features/pieces/lib/pieces-hook';
 import { flagsHooks } from '@/hooks/flags-hooks';
@@ -190,11 +188,6 @@ const PlatformPiecesPage = () => {
                   refetchPieces();
                 }}
               ></ApplyTags>
-              <SyncPiecesButton />
-              <InstallPieceDialog
-                onInstallPiece={() => refetchPieces()}
-                scope={PieceScope.PLATFORM}
-              />
             </div>
           </div>
         </div>
